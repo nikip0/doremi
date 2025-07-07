@@ -20,7 +20,7 @@ async function main() {
   // Create fake artists
   const artists = await prisma.artist.createMany({
     data: Array.from({ length: 3 }).map(() => ({
-      name: faker.music.band(),
+      name: faker.music.genre(),
     })),
     skipDuplicates: true,
   });
