@@ -93,7 +93,7 @@ export default function AlbumPage() {
               <span className="text-3xl">💿</span>
             </div>
             <h1 className="text-2xl font-bold text-gray-900 mb-4">Album Not Found</h1>
-            <p className="text-gray-600 mb-6">The album you're looking for doesn't exist.</p>
+            <p className="text-gray-600 mb-6">The album you&apos;re looking for doesn&apos;t exist.</p>
             <Link 
               href="/trending"
               className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-purple-700 hover:to-blue-700 transition-all duration-200"
