@@ -1,91 +1,148 @@
-import { PrismaClient } from '@prisma/client';
 import { faker } from '@faker-js/faker';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 async function main() {
-  // Create fake users
-  const users = await prisma.user.createMany({
-    data: Array.from({ length: 5 }).map(() => ({
-      email: faker.internet.email(),
-      name: faker.person.fullName(),
-      password: faker.internet.password(),
-    })),
-    skipDuplicates: true,
-  });
+  console.log('🌱 Starting database seeding...');
 
-  // Get all users
-  const allUsers = await prisma.user.findMany();
+  // Clear existing data
+  console.log('🧹 Clearing existing data...');
+  await prisma.follow.deleteMany();
+  await prisma.review.deleteMany();
+  await prisma.track.deleteMany();
+  await prisma.album.deleteMany();
+  await prisma.artist.deleteMany();
+  await prisma.user.deleteMany();
 
-  // Create fake artists
-  const artists = await prisma.artist.createMany({
-    data: Array.from({ length: 3 }).map(() => ({
-      name: faker.music.genre(),
-    })),
-    skipDuplicates: true,
-  });
-
-  // Get all artists
-  const allArtists = await prisma.artist.findMany();
-
-  // Create albums for each artist
-  for (const artist of allArtists) {
-    await prisma.album.create({
+  // Generate Users
+  console.log('👥 Creating users...');
+  const users: any[] = [];
+  for (let i = 0; i < 50; i++) {
+    const user = await prisma.user.create({
       data: {
-        title: faker.music.album(),
-        artistId: artist.id,
-        releaseDate: faker.date.past(),
+        email: faker.internet.email(),
+        name: faker.person.fullName(),
+        password: faker.internet.password(), // In real app, this would be hashed
       },
     });
+    users.push(user);
   }
 
-  // Get all albums
-  const allAlbums = await prisma.album.findMany();
+  // Generate Artists
+  console.log('🎤 Creating artists...');
+  const artists: any[] = [];
+  for (let i = 0; i < 30; i++) {
+    const artist = await prisma.artist.create({
+      data: {
+        name: faker.person.fullName(),
+      },
+    });
+    artists.push(artist);
+  }
 
-  // Create tracks for each album
-  for (const album of allAlbums) {
-    await prisma.track.create({
+  // Generate Albums
+  console.log('💿 Creating albums...');
+  const albums: any[] = [];
+  for (let i = 0; i < 100; i++) {
+    const artist = faker.helpers.arrayElement(artists);
+    const album = await prisma.album.create({
+      data: {
+        title: faker.music.songName(),
+        artistId: artist.id,
+        releaseDate: faker.date.past({ years: 10 }),
+      },
+    });
+    albums.push(album);
+  }
+
+  // Generate Tracks
+  console.log('🎵 Creating tracks...');
+  const tracks: any[] = [];
+  for (let i = 0; i < 500; i++) {
+    const album = faker.helpers.arrayElement(albums);
+    const artist = faker.helpers.arrayElement(artists);
+    const track = await prisma.track.create({
       data: {
         title: faker.music.songName(),
         albumId: album.id,
-        artistId: album.artistId,
-        duration: faker.number.int({ min: 120, max: 400 }),
+        artistId: artist.id,
+        duration: faker.number.int({ min: 60, max: 600 }), // 1-10 minutes in seconds
       },
     });
+    tracks.push(track);
   }
 
-  // Get all tracks
-  const allTracks = await prisma.track.findMany();
-
-  // Create reviews for albums and tracks
-  for (const user of allUsers) {
-    // Album review
-    await prisma.review.create({
-      data: {
-        userId: user.id,
-        albumId: faker.helpers.arrayElement(allAlbums).id,
-        rating: faker.number.int({ min: 1, max: 5 }),
-        content: faker.lorem.sentences(2),
-      },
-    });
-    // Track review
-    await prisma.review.create({
-      data: {
-        userId: user.id,
-        trackId: faker.helpers.arrayElement(allTracks).id,
-        rating: faker.number.int({ min: 1, max: 5 }),
-        content: faker.lorem.sentences(2),
-      },
-    });
+  // Generate Reviews
+  console.log('📝 Creating reviews...');
+  const reviewTypes = ['album', 'track'];
+  
+  for (let i = 0; i < 200; i++) {
+    const user = faker.helpers.arrayElement(users);
+    const reviewType = faker.helpers.arrayElement(reviewTypes);
+    
+    if (reviewType === 'album') {
+      const album = faker.helpers.arrayElement(albums);
+      await prisma.review.create({
+        data: {
+          userId: user.id,
+          albumId: album.id,
+          rating: faker.number.int({ min: 1, max: 5 }),
+          content: faker.lorem.paragraphs(2),
+        },
+      });
+    } else {
+      const track = faker.helpers.arrayElement(tracks);
+      await prisma.review.create({
+        data: {
+          userId: user.id,
+          trackId: track.id,
+          rating: faker.number.int({ min: 1, max: 5 }),
+          content: faker.lorem.paragraphs(2),
+        },
+      });
+    }
   }
 
-  console.log('Database seeded!');
+  // Generate Follows
+  console.log('👥 Creating follows...');
+  for (let i = 0; i < 150; i++) {
+    const follower = faker.helpers.arrayElement(users);
+    const following = faker.helpers.arrayElement(users.filter(u => u.id !== follower.id));
+    
+    // Check if this follow relationship already exists
+    const existingFollow = await prisma.follow.findUnique({
+      where: {
+        followerId_followingId: {
+          followerId: follower.id,
+          followingId: following.id,
+        },
+      },
+    });
+
+    if (!existingFollow) {
+      await prisma.follow.create({
+        data: {
+          followerId: follower.id,
+          followingId: following.id,
+        },
+      });
+    }
+  }
+
+  console.log('✅ Database seeding completed!');
+  console.log(`📊 Created:`);
+  console.log(`   - ${users.length} users`);
+  console.log(`   - ${artists.length} artists`);
+  console.log(`   - ${albums.length} albums`);
+  console.log(`   - ${tracks.length} tracks`);
+  console.log(`   - 200 reviews`);
+  console.log(`   - ~150 follows`);
 }
 
 main()
   .catch((e) => {
-    console.error(e);
-    process.exit(1);
+    console.error('❌ Error during seeding:', e);
   })
   .finally(async () => {
     await prisma.$disconnect();
