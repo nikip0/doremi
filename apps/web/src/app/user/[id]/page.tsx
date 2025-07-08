@@ -66,7 +66,7 @@ export default function UserProfilePage() {
 
   useEffect(() => {
     if (params.id) {
-      fetch(`/api/users/${params.id}`)
+      fetch('/api/users/' + params.id)
         .then((res) => res.json())
         .then((data) => {
           setUser(data);
@@ -201,9 +201,7 @@ export default function UserProfilePage() {
                             {[...Array(5)].map((_, i) => (
                               <span
                                 key={i}
-                                className={`text-sm ${
-                                  i < review.rating ? 'text-yellow-500' : 'text-gray-300'
-                                }`}
+                                className={'text-sm ' + (review.rating >= i + 1 ? 'text-yellow-500' : 'text-gray-300')}
                               >
                                 ★
                               </span>

@@ -99,7 +99,7 @@ export default function TrendingPage() {
         {/* Albums Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {albums.map((album) => (
-            <Link key={album.id} href={`/album/${album.id}`}>
+            <Link key={album.id} href={'/album/' + album.id}>
               <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 overflow-hidden border border-gray-100">
                 {/* Album Cover Placeholder */}
                 <div className="h-48 bg-gradient-to-br from-purple-100 to-blue-100 flex items-center justify-center">

@@ -53,7 +53,7 @@ export default function AlbumPage() {
 
   useEffect(() => {
     if (params.id) {
-      fetch(`/api/albums/${params.id}`)
+      fetch('/api/albums/' + params.id)
         .then((res) => res.json())
         .then((data) => {
           setAlbum(data);
@@ -109,7 +109,7 @@ export default function AlbumPage() {
   const formatDuration = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+    return minutes + ':' + remainingSeconds.toString().padStart(2, '0');
   };
 
   return (
@@ -162,9 +162,7 @@ export default function AlbumPage() {
                 {[...Array(5)].map((_, i) => (
                   <span
                     key={i}
-                    className={`text-2xl ${
-                      i < Math.floor(album.averageRating) ? 'text-yellow-500' : 'text-gray-300'
-                    }`}
+                    className={'text-2xl ' + (Math.floor(album.averageRating) > i ? 'text-yellow-500' : 'text-gray-300')}
                   >
                     ★
                   </span>
@@ -233,9 +231,7 @@ export default function AlbumPage() {
                           {[...Array(5)].map((_, i) => (
                             <span
                               key={i}
-                              className={`text-sm ${
-                                i < review.rating ? 'text-yellow-500' : 'text-gray-300'
-                              }`}
+                              className={'text-sm ' + (review.rating >= i + 1 ? 'text-yellow-500' : 'text-gray-300')}
                             >
                               ★
                             </span>
