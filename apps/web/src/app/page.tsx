@@ -140,7 +140,7 @@ export default function HomePage() {
                     <span className="text-white text-xl">🔥</span>
                   </div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">Trending Albums</h3>
-                  <p className="text-gray-600">See what's hot right now</p>
+                  <p className="text-gray-600">{"See what's hot right now"}</p>
                 </div>
               </div>
             </Link>
