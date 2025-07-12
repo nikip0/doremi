@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
+import { ThemeToggle } from '../../components/ThemeToggle';
 
 interface Track {
   id: string;
@@ -68,14 +69,14 @@ export default function AlbumPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50">
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-purple-900 dark:to-indigo-900 transition-colors duration-300">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="bg-white rounded-2xl shadow-lg p-8 animate-pulse">
-            <div className="h-8 bg-gray-200 rounded mb-4"></div>
-            <div className="h-6 bg-gray-200 rounded mb-8"></div>
+          <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8 animate-pulse">
+            <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
+            <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded mb-8"></div>
             <div className="space-y-4">
               {[...Array(5)].map((_, i) => (
-                <div key={i} className="h-4 bg-gray-200 rounded"></div>
+                <div key={i} className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
               ))}
             </div>
           </div>
@@ -86,14 +87,14 @@ export default function AlbumPage() {
 
   if (!album) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50">
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-purple-900 dark:to-indigo-900 transition-colors duration-300">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
-            <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8 text-center">
+            <div className="w-24 h-24 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-6">
               <span className="text-3xl">💿</span>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">Album Not Found</h1>
-            <p className="text-gray-600 mb-6">The album you&apos;re looking for doesn&apos;t exist.</p>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Album Not Found</h1>
+            <p className="text-gray-600 dark:text-gray-300 mb-6">The album you&apos;re looking for doesn&apos;t exist.</p>
             <Link 
               href="/trending"
               className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-purple-700 hover:to-blue-700 transition-all duration-200"
@@ -113,9 +114,9 @@ export default function AlbumPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-purple-900 dark:to-indigo-900 transition-colors duration-300">
       {/* Header */}
-      <div className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50">
+      <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link href="/" className="flex items-center space-x-2">
@@ -127,12 +128,13 @@ export default function AlbumPage() {
               </span>
             </Link>
             <div className="flex items-center space-x-6">
-              <Link href="/trending" className="text-gray-600 hover:text-purple-600 transition-colors">
+              <Link href="/trending" className="text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
                 Trending
               </Link>
-              <Link href="/user/1" className="text-gray-600 hover:text-purple-600 transition-colors">
+              <Link href="/user/1" className="text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
                 Profile
               </Link>
+              <ThemeToggle />
             </div>
           </div>
         </div>
@@ -140,19 +142,19 @@ export default function AlbumPage() {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Album Header */}
-        <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
+        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8 mb-8">
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-6">
             <div className="flex-1">
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">{album.title}</h1>
-              <p className="text-xl text-gray-600 mb-4">{album.artist.name}</p>
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">{album.title}</h1>
+              <p className="text-xl text-gray-600 dark:text-gray-300 mb-4">{album.artist.name}</p>
               <div className="flex items-center space-x-4 text-sm">
-                <span className="bg-gray-100 px-3 py-1 rounded-full">
+                <span className="bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">
                   {new Date(album.releaseDate).getFullYear()}
                 </span>
-                <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full font-medium">
+                <span className="bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 px-3 py-1 rounded-full font-medium">
                   {album._count.tracks} tracks
                 </span>
-                <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-medium">
+                <span className="bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 px-3 py-1 rounded-full font-medium">
                   {album._count.reviews} reviews
                 </span>
               </div>
@@ -162,13 +164,13 @@ export default function AlbumPage() {
                 {[...Array(5)].map((_, i) => (
                   <span
                     key={i}
-                    className={'text-2xl ' + (Math.floor(album.averageRating) > i ? 'text-yellow-500' : 'text-gray-300')}
+                    className={'text-2xl ' + (Math.floor(album.averageRating) > i ? 'text-yellow-500' : 'text-gray-300 dark:text-gray-600')}
                   >
                     ★
                   </span>
                 ))}
               </div>
-              <span className="text-2xl font-bold text-gray-900">
+              <span className="text-2xl font-bold text-gray-900 dark:text-white">
                 {album.averageRating.toFixed(1)}
               </span>
             </div>
@@ -176,26 +178,26 @@ export default function AlbumPage() {
         </div>
 
         {/* Tracks */}
-        <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Tracks</h2>
+        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8 mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Tracks</h2>
           <div className="space-y-3">
             {album.tracks.map((track, index) => (
-              <div key={track.id} className="flex items-center justify-between py-4 px-4 rounded-xl hover:bg-gray-50 transition-colors border border-gray-100">
+              <div key={track.id} className="flex items-center justify-between py-4 px-4 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors border border-gray-100 dark:border-gray-700">
                 <div className="flex items-center space-x-4">
-                  <span className="text-gray-500 font-medium w-8">{index + 1}</span>
+                  <span className="text-gray-500 dark:text-gray-400 font-medium w-8">{index + 1}</span>
                   <div>
-                    <h3 className="font-semibold text-gray-900">{track.title}</h3>
+                    <h3 className="font-semibold text-gray-900 dark:text-white">{track.title}</h3>
                     {track.reviews.length > 0 && (
                       <div className="flex items-center space-x-1 mt-1">
                         <span className="text-yellow-500 text-sm">★</span>
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-gray-500 dark:text-gray-400">
                           {track.reviews.length} reviews
                         </span>
                       </div>
                     )}
                   </div>
                 </div>
-                <span className="text-gray-500 text-sm font-medium">
+                <span className="text-gray-500 dark:text-gray-400 text-sm font-medium">
                   {formatDuration(track.duration || 0)}
                 </span>
               </div>
@@ -204,20 +206,20 @@ export default function AlbumPage() {
         </div>
 
         {/* Reviews */}
-        <div className="bg-white rounded-2xl shadow-lg p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Reviews</h2>
+        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Reviews</h2>
           {album.reviews.length === 0 ? (
             <div className="text-center py-12">
-              <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-20 h-20 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl">⭐</span>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">No reviews yet</h3>
-              <p className="text-gray-600">Be the first to review this album!</p>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No reviews yet</h3>
+              <p className="text-gray-600 dark:text-gray-300">Be the first to review this album!</p>
             </div>
           ) : (
             <div className="space-y-6">
               {album.reviews.map((review) => (
-                <div key={review.id} className="border-b border-gray-100 pb-6 last:border-b-0">
+                <div key={review.id} className="border-b border-gray-100 dark:border-gray-700 pb-6 last:border-b-0">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-3">
                       <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
@@ -226,12 +228,12 @@ export default function AlbumPage() {
                         </span>
                       </div>
                       <div>
-                        <span className="font-semibold text-gray-900">{review.user.name}</span>
+                        <span className="font-semibold text-gray-900 dark:text-white">{review.user.name}</span>
                         <div className="flex items-center space-x-1 mt-1">
                           {[...Array(5)].map((_, i) => (
                             <span
                               key={i}
-                              className={'text-sm ' + (review.rating >= i + 1 ? 'text-yellow-500' : 'text-gray-300')}
+                              className={'text-sm ' + (review.rating >= i + 1 ? 'text-yellow-500' : 'text-gray-300 dark:text-gray-600')}
                             >
                               ★
                             </span>
@@ -239,11 +241,11 @@ export default function AlbumPage() {
                         </div>
                       </div>
                     </div>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-gray-500 dark:text-gray-400">
                       {new Date(review.createdAt).toLocaleDateString()}
                     </span>
                   </div>
-                  <p className="text-gray-700 leading-relaxed">{review.content}</p>
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{review.content}</p>
                 </div>
               ))}
             </div>

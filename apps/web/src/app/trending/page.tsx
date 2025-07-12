@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { ThemeToggle } from '../components/ThemeToggle';
 
 interface Album {
   id: string;
@@ -37,20 +38,20 @@ export default function TrendingPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50">
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-purple-900 dark:to-indigo-900 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Trending Albums</h1>
-            <p className="text-xl text-gray-600">Discover what&apos;s hot in music right now</p>
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Trending Albums</h1>
+            <p className="text-xl text-gray-600 dark:text-gray-300">Discover what&apos;s hot in music right now</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {[...Array(8)].map((_, i) => (
-              <div key={i} className="bg-white rounded-2xl shadow-lg p-6 animate-pulse">
-                <div className="h-48 bg-gray-200 rounded-xl mb-4"></div>
-                <div className="h-6 bg-gray-200 rounded mb-3"></div>
-                <div className="h-4 bg-gray-200 rounded mb-2"></div>
-                <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+              <div key={i} className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-6 animate-pulse">
+                <div className="h-48 bg-gray-200 dark:bg-gray-700 rounded-xl mb-4"></div>
+                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded mb-3"></div>
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
               </div>
             ))}
           </div>
@@ -60,9 +61,9 @@ export default function TrendingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-purple-900 dark:to-indigo-900 transition-colors duration-300">
       {/* Header */}
-      <div className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50">
+      <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link href="/" className="flex items-center space-x-2">
@@ -74,12 +75,13 @@ export default function TrendingPage() {
               </span>
             </Link>
             <div className="flex items-center space-x-6">
-              <Link href="/trending" className="text-purple-600 font-semibold">
+              <Link href="/trending" className="text-purple-600 dark:text-purple-400 font-semibold">
                 Trending
               </Link>
-              <Link href="/user/1" className="text-gray-600 hover:text-purple-600 transition-colors">
+              <Link href="/user/1" className="text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
                 Profile
               </Link>
+              <ThemeToggle />
             </div>
           </div>
         </div>
@@ -88,10 +90,10 @@ export default function TrendingPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Page Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             Trending Albums
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Discover the most popular albums based on reviews and ratings from our community
           </p>
         </div>
@@ -100,51 +102,51 @@ export default function TrendingPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {albums.map((album) => (
             <Link key={album.id} href={'/album/' + album.id}>
-              <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 overflow-hidden border border-gray-100">
+              <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 overflow-hidden border border-gray-100 dark:border-gray-700">
                 {/* Album Cover Placeholder */}
-                <div className="h-48 bg-gradient-to-br from-purple-100 to-blue-100 flex items-center justify-center">
+                <div className="h-48 bg-gradient-to-br from-purple-100 to-blue-100 dark:from-purple-900 dark:to-blue-900 flex items-center justify-center">
                   <div className="text-center">
                     <span className="text-4xl mb-2 block">💿</span>
-                    <p className="text-sm text-gray-600 font-medium">Album Cover</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 font-medium">Album Cover</p>
                   </div>
                 </div>
                 
                 <div className="p-6">
                   <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-lg font-bold text-gray-900 line-clamp-2 leading-tight">
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white line-clamp-2 leading-tight">
                       {album.title}
                     </h3>
                     <div className="flex items-center space-x-1 ml-2">
                       <span className="text-yellow-500 text-lg">★</span>
-                      <span className="text-sm font-bold text-gray-700">
+                      <span className="text-sm font-bold text-gray-700 dark:text-gray-200">
                         {album.averageRating.toFixed(1)}
                       </span>
                     </div>
                   </div>
                   
-                  <p className="text-gray-600 font-medium mb-3">{album.artist.name}</p>
+                  <p className="text-gray-600 dark:text-gray-300 font-medium mb-3">{album.artist.name}</p>
                   
-                  <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                    <span className="bg-gray-100 px-2 py-1 rounded-full">
+                  <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
+                    <span className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full">
                       {new Date(album.releaseDate).getFullYear()}
                     </span>
-                    <span className="bg-purple-100 text-purple-700 px-2 py-1 rounded-full font-medium">
+                    <span className="bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 px-2 py-1 rounded-full font-medium">
                       {album.reviewCount} reviews
                     </span>
                   </div>
                   
-                  <div className="border-t pt-4">
-                    <p className="text-sm text-gray-600 mb-2 font-medium">
+                  <div className="border-t border-gray-100 dark:border-gray-700 pt-4">
+                    <p className="text-sm text-gray-600 dark:text-gray-300 mb-2 font-medium">
                       {album.tracks.length} tracks
                     </p>
                     <div className="space-y-1">
                       {album.tracks.slice(0, 3).map((track) => (
-                        <p key={track.id} className="text-xs text-gray-500 truncate">
+                        <p key={track.id} className="text-xs text-gray-500 dark:text-gray-400 truncate">
                           {track.title}
                         </p>
                       ))}
                       {album.tracks.length > 3 && (
-                        <p className="text-xs text-purple-600 font-medium">
+                        <p className="text-xs text-purple-600 dark:text-purple-400 font-medium">
                           +{album.tracks.length - 3} more tracks
                         </p>
                       )}
@@ -159,11 +161,11 @@ export default function TrendingPage() {
         {/* Empty State */}
         {albums.length === 0 && !loading && (
           <div className="text-center py-16">
-            <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="w-24 h-24 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-6">
               <span className="text-3xl">🎵</span>
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">No trending albums yet</h3>
-            <p className="text-gray-600">Be the first to review an album and make it trend!</p>
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No trending albums yet</h3>
+            <p className="text-gray-600 dark:text-gray-300">Be the first to review an album and make it trend!</p>
           </div>
         )}
       </div>
