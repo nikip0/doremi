@@ -5,12 +5,12 @@ const prisma = new PrismaClient();
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
     const album = await prisma.album.findUnique({
       where: {
-        id: params.id,
+        id: context.params.id,
       },
       include: {
         artist: true,
